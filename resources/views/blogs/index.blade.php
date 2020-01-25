@@ -1,14 +1,14 @@
 @extends('partials.master')
 
 @section('title')
-    All Categories
+    All Blogs
 @endsection
 
 @section('content')
 
     <h3 class="text-center">
-        Categories List
-        <small> <a class="text-success" title="Add New Category" href="{{route('categories.create')}}">+</a></small>
+        Blogs List
+        <small> <a class="text-success" title="Add New Blog" href="{{route('blogs.create')}}">+</a></small>
     </h3>
     <hr>
     <div class="row">
@@ -19,25 +19,25 @@
                 <thead class="thead-dark">
                 <tr>
                     <th scope="col">Sr.No.</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Blogs</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Category</th>
                     <th scope="col">Created</th>
                     <th scope="col">Updated</th>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($categories as $category)
+                @foreach($blogs as $index => $blog)
                     <tr>
-                        <th scope="row">{{$category->id}}</th>
-                        <td>{{$category->name}}</td>
-                        <td>{{$category->blogs->count()}}</td>
-                        <td>{{$category->created_at->diffForHumans()}}</td>
-                        <td>{{$category->updated_at->diffForHumans()}}</td>
+                        <th scope="row">{{$index + $blogs->firstItem()}}</th>
+                        <td>{{$blog->title}}</td>
+                        <td>{{$blog->category->name}}</td>
+                        <td>{{$blog->created_at->diffForHumans()}}</td>
+                        <td>{{$blog->updated_at->diffForHumans()}}</td>
                         <td width="30%">
-                            <a class="btn btn-sm btn-success float-left" href="{{route('categories.show', $category)}}">View</a>
-                            <a class="btn btn-sm btn-warning float-left" href="{{route('categories.edit', $category)}}">Edit</a>
-                            <form action="{{route('categories.destroy', $category)}}" method="POST">
+                            <a class="btn btn-sm btn-success float-left" href="{{route('blogs.show', $blog)}}">View</a>
+                            <a class="btn btn-sm btn-warning float-left" href="{{route('blogs.edit', $blog)}}">Edit</a>
+                            <form action="{{route('blogs.destroy', $blog)}}" method="POST">
                                 @csrf
                                 @method('delete')
                                 <button class="btn btn-sm btn-danger">Delete</button>
@@ -47,7 +47,7 @@
                 @endforeach
                 </tbody>
             </table>
-            {{$categories->links()}}
+            {{$blogs->links()}}
         </div>
         <div class="col-md-2"></div>
     </div>

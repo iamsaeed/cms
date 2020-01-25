@@ -1,13 +1,35 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-Edit
-</body>
-</html>
+@extends('partials.master')
+
+@section('title')
+    Edit Categories
+@endsection
+
+@section('content')
+    <h3 class="text-center">
+        Edit Category
+    </h3>
+    <hr>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{route('categories.update', $category)}}" method="POST">
+                        @csrf
+                        @method('put')
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input name="name" type="text" class="form-control" id="name" value="{{$category->name}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea rows="7" name="description" type="text" class="form-control" id="description">{{$category->description}}</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+@endsection

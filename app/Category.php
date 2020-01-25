@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     public function blogs(){
-        return $this->belongsTo('App\Blog');
+        return $this->hasMany('App\Blog');
     }
 }
