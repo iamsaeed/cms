@@ -25,7 +25,14 @@
                             <label for="description">Description</label>
                             <textarea rows="7" name="description" type="text" class="form-control" id="description">{{$blog->description}}</textarea>
                         </div>
-
+                        <div class="form-group">
+                            <label for="description">Select Tags</label>
+                            <select multiple class="form-control" name="tag_id[]">
+                                @foreach($tags as $tag)
+                                    <option value="{{$tag->id}}">{{$tag->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="description">Select Category</label>
                             <select class="form-control" name="category_id">

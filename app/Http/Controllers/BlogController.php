@@ -15,10 +15,14 @@ class BlogController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $blogs = Blog::paginate(10);
-        return view('blogs.index')->withBlogs($blogs);
+        $title = $request->title ? $request->title : '';
+        $category = $request->category ? $request->category : '';
+        $blogs = Blog::where('title', 'like', '%'.$title.'%')
+            ->orWhere('category_id', 'like', '%'.$category.'%')
+            ->paginate(5);
+        return view('blogs.index')->withBlogs($blogs)->withTitle($title)->withCategory($category);
     }
 
     /**
@@ -71,8 +75,9 @@ class BlogController extends Controller
      */
     public function edit(Blog $blog)
     {
+        $tags = Tag::all();
         $categories = Category::all();
-        return view('blogs.edit')->withBlog($blog)->withCategories($categories);
+        return view('blogs.edit')->withBlog($blog)->withCategories($categories)->withTags($tags);
     }
 
     /**
@@ -88,6 +93,8 @@ class BlogController extends Controller
         $blog->description = $request->description;
         $blog->category_id = $request->category_id;
         $blog->save();
+
+        $blog->tags()->sync($request->tag_id);
 
         return redirect()->route('blogs.index');
     }
