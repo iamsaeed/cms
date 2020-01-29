@@ -41,6 +41,22 @@
 </nav>
 <br>
 <div class="container">
+    <div class="col"></div>
+    <div class="col">
+        @if (session('danger'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('danger') }}
+            </div>
+        @endif
+        @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+    </div>
+    <div class="col"></div>
+</div>
+<div class="container">
     @yield('content')
 </div>
 </body>

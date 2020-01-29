@@ -21,6 +21,7 @@
                     <th scope="col">Sr.No.</th>
                     <th scope="col">Name</th>
                     <th scope="col">Blogs</th>
+                    <th scope="col">Created By</th>
                     <th scope="col">Created</th>
                     <th scope="col">Updated</th>
                     <th scope="col">Action</th>
@@ -32,6 +33,13 @@
                         <th scope="row">{{$category->id}}</th>
                         <td>{{$category->name}}</td>
                         <td>{{$category->blogs->count()}}</td>
+                        <td>
+                            @if($category->user_id)
+                            {{$category->user->name}}
+                            @else
+                                None
+                            @endif
+                        </td>
                         <td>{{$category->created_at->diffForHumans()}}</td>
                         <td>{{$category->updated_at->diffForHumans()}}</td>
                         <td width="30%">

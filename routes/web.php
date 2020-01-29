@@ -8,7 +8,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('categories', 'CategoryController');
+Route::resource('categories', 'CategoryController')->middleware('auth');
 
-Route::resource('blogs', 'BlogController');
-Route::resource('tags', 'TagController');
+Route::resource('blogs', 'BlogController')->middleware('auth');
+Route::resource('tags', 'TagController')->middleware('auth');

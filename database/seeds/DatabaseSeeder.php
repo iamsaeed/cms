@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         factory(App\User::class, 10)->create();
         factory(App\Category::class, 50)->create();
-        factory(App\Blog::class, 200)->create();
         factory(App\Tag::class, 50)->create();
+        factory(App\Blog::class, 200)->create();
     }
 }
