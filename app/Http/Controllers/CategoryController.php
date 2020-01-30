@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
+
+    public function userindex()
+    {
+        $categories = Category::paginate(10);
+
+        return view('users.categories.index')->withCategories($categories);
+    }
+
     /**
      * Display a listing of the resource.
      *

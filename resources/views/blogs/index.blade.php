@@ -1,4 +1,4 @@
-@extends('partials.master')
+@extends('layouts.app')
 
 @section('title')
     All Blogs

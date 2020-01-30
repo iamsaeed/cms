@@ -1,1 +1,1 @@
-@extends('partials.master')
+@extends('layouts.app')

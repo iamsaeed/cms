@@ -7,7 +7,7 @@
 @section('content')
 
     <h3 class="text-center">
-        Categories List
+        Categories List for Users
         <small> <a class="text-success" title="Add New Category" href="{{route('categories.create')}}">+</a></small>
     </h3>
     <hr>
