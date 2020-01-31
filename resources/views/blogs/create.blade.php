@@ -14,11 +14,15 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{route('blogs.store')}}" method="POST">
+                    <form action="{{route('blogs.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="title">Name</label>
                             <input name="title" type="text" class="form-control" id="title">
+                        </div>
+                        <div class="form-group">
+                            <label for="image">Image</label>
+                            <input name="image" type="file" class="form-control" id="image">
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>

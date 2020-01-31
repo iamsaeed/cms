@@ -36,6 +36,7 @@
                 <thead class="thead-dark">
                 <tr>
                     <th scope="col">Sr.No.</th>
+                    <th scope="col">Image</th>
                     <th scope="col">Title</th>
                     <th scope="col">Category</th>
                     <th scope="col">Tags</th>
@@ -48,6 +49,13 @@
                 @foreach($blogs as $index => $blog)
                     <tr>
                         <th scope="row">{{$index + $blogs->firstItem()}}</th>
+                        <td>
+                            @if($blog->image)
+                            <img class="img-thumbnail" src="{{asset($blog->image)}}" width="100px" height="auto" >
+                            @else
+                            No Image
+                            @endif
+                        </td>
                         <td>{{$blog->title}}</td>
                         <td>{{$blog->category->name}}</td>
                         <td>

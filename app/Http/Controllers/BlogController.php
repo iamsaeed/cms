@@ -7,6 +7,7 @@ use App\Category;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Intervention\Image\Facades\Image as Photo;
 
 class BlogController extends Controller
 {
@@ -49,6 +50,14 @@ class BlogController extends Controller
         $blog->title = $request->title;
         $blog->description = $request->description;
         $blog->category_id = $request->category_id;
+
+        if($request->file('image'))
+        {
+            $filename = $this->upoadImage($request->file('image'));
+
+            $blog->image = $filename;
+        }
+
         $blog->save();
 
         $blog->tags()->sync($request->tag_id);
@@ -92,6 +101,18 @@ class BlogController extends Controller
         $blog->title = $request->title;
         $blog->description = $request->description;
         $blog->category_id = $request->category_id;
+
+        if($request->file('image'))
+        {
+            if($blog->image !== null){
+                $this->deleteImage($blog->image);
+            }
+
+            $filename = $this->upoadImage($request->file('image'));
+
+            $blog->image = $filename;
+        }
+
         $blog->save();
 
         $blog->tags()->sync($request->tag_id);
@@ -109,6 +130,37 @@ class BlogController extends Controller
     public function destroy(Blog $blog)
     {
         $blog->delete();
+
+        if($blog->image)
+        {
+            $this->deleteImage($blog->image);
+        }
+
         return redirect()->route('blogs.index');
+    }
+
+    public function upoadImage($image){
+
+        //generating random string from current time
+        $random_name = time();
+
+        //getting image extension
+        $extension = $image->getClientOriginalExtension();
+
+        //generating new image name
+        $filename = time() . '.' . $extension;
+
+        //Saving image here
+        Photo::make($image)->save(public_path('/' . $filename));
+
+        return $filename;
+    }
+
+    public function deleteImage($image)
+    {
+        $filename = public_path() . '/' . $image;
+
+        unlink($filename);
+
     }
 }
