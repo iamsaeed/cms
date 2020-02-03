@@ -21,11 +21,16 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $categories = Category::paginate(10);
 
-        return view('categories.index')->withCategories($categories);
+    public function index(Request $request)
+    {
+        $name = ($request->name) ? $request->name : '';
+        $description = ($request->description) ? $request->description : '';
+
+        $categories = Category::search('name', $name)
+            ->search('description', $description)->paginate(10);
+
+        return view('categories.index')->withCategories($categories)->withName($name)->withDescription($description);
     }
 
     /**

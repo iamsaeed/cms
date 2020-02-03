@@ -14,12 +14,32 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class="col-md-8">
+            <form class="form-inline" method="get" action="{{route('categories.index')}}">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input name="name" type="text" class="form-control" value="{{$name}}">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input name="description" type="text" class="form-control" value="{{$description}}">
+                </div>
+                <button class="btn btn-primary" type="submit">Search</button>
+                <a class="btn btn-danger" href="{{route('categories.index')}}">Reset</a>
+            </form>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
 
             <table class="table table-sm table-borderless table-striped">
                 <thead class="thead-dark">
                 <tr>
                     <th scope="col">Sr.No.</th>
                     <th scope="col">Name</th>
+                    <th scope="col">Description</th>
                     <th scope="col">Blogs</th>
                     <th scope="col">Created By</th>
                     <th scope="col">Created</th>
@@ -32,6 +52,7 @@
                     <tr>
                         <th scope="row">{{$category->id}}</th>
                         <td>{{$category->name}}</td>
+                        <td>{{$category->description}}</td>
                         <td>{{$category->blogs->count()}}</td>
                         <td>
                             @if($category->user_id)

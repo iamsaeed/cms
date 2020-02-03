@@ -2,9 +2,7 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Tag extends Model
+class Tag extends App
 {
     public function blogs(){
         return $this->belongsToMany('App\Blog');

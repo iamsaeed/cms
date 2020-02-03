@@ -2,10 +2,9 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Blog extends Model
+class Blog extends App
 {
+
     public function category(){
         return $this->belongsTo('App\Category');
     }
