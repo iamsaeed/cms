@@ -24,13 +24,16 @@ class CategoryController extends Controller
 
     public function index(Request $request)
     {
-        $name = ($request->name) ? $request->name : '';
-        $description = ($request->description) ? $request->description : '';
+            abort_if(!Auth::user()->hasPermission('read-categories'), 403);
 
-        $categories = Category::search('name', $name)
-            ->search('description', $description)->paginate(10);
+            $name = ($request->name) ? $request->name : '';
+            $description = ($request->description) ? $request->description : '';
 
-        return view('categories.index')->withCategories($categories)->withName($name)->withDescription($description);
+            $categories = Category::search('name', $name)
+                ->search('description', $description)->paginate(10);
+
+            return view('categories.index')->withCategories($categories)->withName($name)->withDescription($description);
+
     }
 
     /**
@@ -40,6 +43,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        abort_if(!Auth::user()->hasPermission('create-categories'), 403);
+
         return view('categories.create');
     }
 
@@ -51,6 +56,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(!Auth::user()->hasPermission('create-categories'), 403);
+
         $request->validate([
            'name' => 'required|unique:categories,name',
            'description' => 'required',
@@ -73,6 +80,8 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
+        abort_if(!Auth::user()->hasPermission('read-categories'), 403);
+
         return view('categories.show')->withCategory($category);
     }
 
@@ -84,6 +93,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        abort_if(!Auth::user()->hasPermission('update-categories'), 403);
+
         return view('categories.edit')->withCategory($category);
     }
 
@@ -96,6 +107,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        abort_if(!Auth::user()->hasPermission('update-categories'), 403);
+
         $request->validate([
             'name' => 'required|unique:categories,name,'.$category->id,
             'description' => 'required',
@@ -117,6 +130,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        abort_if(!Auth::user()->hasPermission('delete-categories'), 403);
+
         if($category->blogs->count() > 0){
             return back()->with('danger', 'This category has linked blogs, cannot be deleted');
         }

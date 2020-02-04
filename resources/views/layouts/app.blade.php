@@ -44,15 +44,21 @@
                                 </li>
                             @endif
                         @else
+                            @permission('read-categories')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('categories.index') }}">Categories</a>
                             </li>
+                            @endpermission
+                            @permission('read-tags')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('tags.index') }}">Tags</a>
                             </li>
+                            @endpermission
+                            @permission('read-blogs')
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('blogs.index') }}">Blogs</a>
                             </li>
+                            @endpermission
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -75,7 +81,27 @@
                 </div>
             </div>
         </nav>
-
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                @if (session('danger'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ session('danger') }}
+                    </div>
+                @endif
+                @if (session('success'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                @if (session('warning'))
+                    <div class="alert alert-warning" role="alert">
+                        {{ session('warning') }}
+                    </div>
+                @endif
+            </div>
+            <div class="col"></div>
+        </div>
         <main class="py-4">
             @yield('content')
         </main>

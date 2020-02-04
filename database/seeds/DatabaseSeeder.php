@@ -11,13 +11,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $user = new App\User;
-        $user->name = 'Super Admin';
-        $user->email = 'superadmin@app.com';
-        $user->password = bcrypt('password');
-        $user->save();
+//        $user = new App\User;
+//        $user->name = 'Super Admin';
+//        $user->email = 'superadmin@app.com';
+//        $user->password = bcrypt('password');
+//        $user->save();
 
-        // $this->call(UsersTableSeeder::class);
+         $this->call(LaratrustSeeder::class);
         factory(App\User::class, 10)->create();
         factory(App\Category::class, 50)->create();
         factory(App\Tag::class, 50)->create();

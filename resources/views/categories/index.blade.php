@@ -64,13 +64,19 @@
                         <td>{{$category->created_at->diffForHumans()}}</td>
                         <td>{{$category->updated_at->diffForHumans()}}</td>
                         <td width="30%">
+                            @permission('read-categories')
                             <a class="btn btn-sm btn-success float-left" href="{{route('categories.show', $category)}}">View</a>
+                            @endpermission
+                            @permission('updated-categories')
                             <a class="btn btn-sm btn-warning float-left" href="{{route('categories.edit', $category)}}">Edit</a>
+                            @endpermission
+                            @permission('delete-categories')
                             <form action="{{route('categories.destroy', $category)}}" method="POST">
                                 @csrf
                                 @method('delete')
                                 <button class="btn btn-sm btn-danger">Delete</button>
                             </form>
+                            @endpermission
                         </td>
                     </tr>
                 @endforeach
