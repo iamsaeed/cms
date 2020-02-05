@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('meta')
+    <meta name="keywords" content="Laravel In Lucknow | UP | India">
+@endsection
+
 @section('title')
     {{$category->name}}
 @endsection

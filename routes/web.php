@@ -13,7 +13,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::prefix('admins')->middleware(['auth', 'admins'])->group(function ()
 {
-    Route::resource('categories', 'CategoryController');
+    Route::resource('categories', 'CategoryController')->except('show');
+    Route::get('categories/{slug}', 'CategoryController@show')->name('categories.show');
 
     Route::resource('blogs', 'BlogController');
     Route::resource('tags', 'TagController');

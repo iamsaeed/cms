@@ -65,7 +65,7 @@
                         <td>{{$category->updated_at->diffForHumans()}}</td>
                         <td width="30%">
                             @permission('read-categories')
-                            <a class="btn btn-sm btn-success float-left" href="{{route('categories.show', $category)}}">View</a>
+                            <a class="btn btn-sm btn-success float-left" href="{{route('categories.show', $category->slug)}}">View</a>
                             @endpermission
                             @permission('updated-categories')
                             <a class="btn btn-sm btn-warning float-left" href="{{route('categories.edit', $category)}}">Edit</a>

@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+    @yield('meta')
     @include('partials.header')
 </head>
 <body>
