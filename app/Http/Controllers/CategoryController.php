@@ -8,14 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
-
-    public function userindex()
-    {
-        $categories = Category::paginate(10);
-
-        return view('users.categories.index')->withCategories($categories);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -30,6 +22,7 @@ class CategoryController extends Controller
             $description = ($request->description) ? $request->description : '';
 
             $categories = Category::search('name', $name)
+                ->orderBy('created_at', 'desc')
                 ->search('description', $description)->paginate(10);
 
             return view('categories.index')->withCategories($categories)->withName($name)->withDescription($description);
@@ -142,5 +135,14 @@ class CategoryController extends Controller
 
         $category->delete();
         return redirect()->route('categories.index')->with('success', 'This category has deleted');
+    }
+
+
+
+    public function userindex()
+    {
+        $categories = Category::paginate(10);
+
+        return view('users.categories.index')->withCategories($categories);
     }
 }
