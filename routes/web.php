@@ -7,11 +7,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
-Route::prefix('admins')->middleware(['auth', 'admins'])->group(function ()
+Route::prefix('admins')->middleware(['auth', 'admins', 'verified'])->group(function ()
 {
     Route::resource('categories', 'CategoryController')->except('show');
     Route::get('categories/{slug}', 'CategoryController@show')->name('categories.show');
@@ -20,6 +20,6 @@ Route::prefix('admins')->middleware(['auth', 'admins'])->group(function ()
     Route::resource('tags', 'TagController');
 });
 
-Route::prefix('users')->name('users.')->middleware(['auth', 'users'])->group(function () {
+Route::prefix('users')->name('users.')->middleware(['auth', 'users', 'verified'])->group(function () {
     Route::get('/categories','CategoryController@userindex')->name('categories.index');
 });

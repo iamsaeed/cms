@@ -14,7 +14,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        return view('tags.index');
+
+        $tags = Tag::orderBy('created_at','desc')->paginate(10);
+        return view('tags.index')->withTags($tags);
     }
 
     /**
@@ -24,7 +26,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return view('tags.create');
     }
 
     /**
@@ -35,7 +37,15 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:tags,name'
+        ]);
+
+        $tag = new Tag;
+        $tag->name = $request->name;
+        $tag->save();
+
+        return redirect()->route('tags.index');
     }
 
     /**
@@ -57,7 +67,7 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        //
+        return view('tags.edit')->withTag($tag);
     }
 
     /**
@@ -69,7 +79,14 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:tags,name,'.$tag->id
+        ]);
+
+        $tag->name = $request->name;
+        $tag->save();
+
+        return redirect()->route('tags.index');
     }
 
     /**
