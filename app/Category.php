@@ -8,7 +8,7 @@ class Category extends App
     use SoftDeletes;
 
     public function blogs(){
-        return $this->hasMany('App\Blog');
+        return $this->hasMany('App\Blog')->orderBy('created_at', 'desc');
     }
 
     public function user(){

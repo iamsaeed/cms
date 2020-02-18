@@ -16,7 +16,7 @@ class CategoryController extends Controller
 
     public function index(Request $request)
     {
-            abort_if(!Auth::user()->hasPermission('read-categories'), 403);
+//            abort_if(!Auth::user()->hasPermission('read-categories'), 403);
 
             $name = ($request->name) ? $request->name : '';
             $description = ($request->description) ? $request->description : '';
@@ -25,9 +25,13 @@ class CategoryController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->search('description', $description)->paginate(10);
 
+//            return $this->processResponse($categories,'success');
+
             return view('categories.index')->withCategories($categories)->withName($name)->withDescription($description);
 
     }
+
+
 
     /**
      * Show the form for creating a new resource.

@@ -11,6 +11,7 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 
+
 Route::prefix('admins')->middleware(['auth', 'admins', 'verified'])->group(function ()
 {
     Route::resource('categories', 'CategoryController')->except('show');
