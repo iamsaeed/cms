@@ -46,11 +46,39 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
-        //
+        if(!$request->has('id')) {
+            $request->validate([
+                'name' => 'required|unique:categories,name',
+                'description' => 'required',
+            ]);
+        } else {
+            $request->validate([
+                'name' => 'required|unique:categories,name,'.$request->id,
+                'description' => 'required',
+            ]);
+        }
+
+        if($request->has('slug'))
+        {
+            $slug = $this->slugify($request->name, 'categories');
+        };
+
+        $category = Category::updateOrCreate(
+            ['id' => $request->id],
+            [
+            'user_id' => 1,
+            'slug' => ($request->has('slug')) ? $this->slugify($request->slug, 'categories') : Category::find($request->id)->slug,
+            'name' => $request->name,
+            'description' => $request->description
+            ]
+        );
+
+
+        return $this->processResponse($category,'success', 'Category created');
     }
 
     /**
@@ -91,17 +119,27 @@ class CategoryController extends Controller
      * Remove the specified resource from storage.
      *
      * @param \App\Category $category
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        if($category->blogs->count() > 0){
-            return $this->processResponse(null,'error', 'This category has linked blogs, cannot be deleted');
-        }
 
-        $category->delete();
-        return $this->processResponse(null,'success', 'This category has deleted');
+        $category = Category::find($id);
+
+        if($category)
+        {
+            if($category->blogs->count() > 0)
+            {
+                return $this->processResponse(null,'error', 'This category has linked blogs, cannot be deleted');
+            }
+            $category->delete();
+
+            return $this->processResponse(null,'success', 'This category has been deleted');
+
+        } else {
+            return $this->processResponse(null,'error', 'This category does not exists');
+        }
 
     }
 }
