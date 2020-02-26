@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Traits\ProcessResponseTrait;
@@ -21,6 +22,7 @@ class AuthController extends Controller
         ]);
 
         try {
+
             $http = new \GuzzleHttp\Client;
 
             $response = $http->post(env('APP_URL').'/oauth/token', [
