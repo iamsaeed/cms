@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
 use App\Blog;
 use App\Category;
-use App\Tag;
+use App\Mail\BlogCreated;
+use App\Mail\BlogUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image as Photo;
 
 class BlogController extends Controller
@@ -62,6 +65,9 @@ class BlogController extends Controller
 
         $blog->tags()->sync($request->tag_id);
 
+        //send mail
+        Mail::to('asklko2004@gmail.com', 'ahmad@hellow.in')->send(new BlogCreated($blog));
+
         return redirect()->route('blogs.index');
     }
 
@@ -116,6 +122,8 @@ class BlogController extends Controller
         $blog->save();
 
         $blog->tags()->sync($request->tag_id);
+
+        Mail::to('info@hellow.in')->send(new BlogUpdated($blog));
 
         return redirect()->route('blogs.index');
     }
