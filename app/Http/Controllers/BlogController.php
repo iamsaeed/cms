@@ -66,7 +66,7 @@ class BlogController extends Controller
         $blog->tags()->sync($request->tag_id);
 
         //send mail
-        Mail::to('asklko2004@gmail.com', 'ahmad@hellow.in')->send(new BlogCreated($blog));
+        Mail::to('test@test.com')->send(new BlogCreated($blog));
 
         return redirect()->route('blogs.index');
     }
