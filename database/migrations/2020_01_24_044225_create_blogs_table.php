@@ -17,7 +17,10 @@ class CreateBlogsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->text('description')->nullable()->default(null);
-            $table->unsignedInteger('category_id');
+            $table->unsignedBigInteger('category_id');
+
+            $table->foreign('category_id')->references('id')->on('categories');
+
             $table->timestamps();
         });
     }

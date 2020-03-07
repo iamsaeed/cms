@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::apiResource('categories', 'Api\CategoryController')->middleware('auth:api');
 
+Route::apiResource('blogs', 'Api\BlogController');
+
 Route::post('/login', 'Api\AuthController@login');
 Route::post('/logout', 'Api\AuthController@logout')->middleware('auth:api');
 Route::post('/register', 'Api\AuthController@register');
